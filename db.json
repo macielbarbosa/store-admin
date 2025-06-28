@@ -1,0 +1,19 @@
+{
+  "products": [
+    {
+      "name": "Product 1",
+      "price": 21.5,
+      "status": "active"
+    },
+    {
+      "name": "Product 2",
+      "price": 22.5,
+      "status": "active"
+    },
+    {
+      "name": "Product 3",
+      "price": 22.5,
+      "status": "inactive"
+    }
+  ]
+}
