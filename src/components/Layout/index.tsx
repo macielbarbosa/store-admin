@@ -1,8 +1,8 @@
 import { Outlet } from "react-router";
 import { Heading } from "@radix-ui/themes";
 
+import { CartIcon } from "../CartIcon";
 import { AppBar, Root } from "./style";
-import { CartIcon } from "./CartIcon";
 
 export const Layout = () => {
   return (
