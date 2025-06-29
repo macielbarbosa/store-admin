@@ -1,16 +1,19 @@
 {
   "products": [
     {
+      "id": 0,
       "name": "Notebook Samsung Galaxy 8GB 120GB SSD",
       "price": 1221,
       "status": "active"
     },
     {
+      "id": 1,
       "name": "Caneta azul",
       "price": 0.5,
       "status": "active"
     },
     {
+      "id": 2,
       "name": "Headset Gamer HyperX",
       "price": 2.5,
       "status": "inactive"

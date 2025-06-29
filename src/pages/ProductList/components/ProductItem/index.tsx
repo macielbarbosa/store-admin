@@ -5,12 +5,16 @@ import type { Product } from "@/models/product";
 import { toCurrency } from "@/utils/toCurrency";
 
 import { Actions, Card } from "./style";
+import { useCartState } from "@/state/cart";
 
 interface Props {
   product: Product;
 }
 
-export const ProductItem = ({ product: { name, price, status } }: Props) => {
+export const ProductItem = ({
+  product: { id, name, price, status },
+}: Props) => {
+  const { increaseItem } = useCartState();
   const isActive = status === "active";
 
   return (
@@ -21,7 +25,10 @@ export const ProductItem = ({ product: { name, price, status } }: Props) => {
         {isActive ? "Ativo" : "Inativo"}
       </Badge>
       <Actions>
-        <Button disabled={status === "inactive"}>
+        <Button
+          disabled={status === "inactive"}
+          onClick={() => increaseItem(id)}
+        >
           <PlusCircledIcon />
           Adicionar ao Carrinho
         </Button>
