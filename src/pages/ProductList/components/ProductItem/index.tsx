@@ -1,8 +1,8 @@
 import { Badge, Button, Heading } from "@radix-ui/themes";
 import { Pencil2Icon, PlusCircledIcon } from "@radix-ui/react-icons";
 
-import type { Product } from "../../../../models/product";
-import { toCurrency } from "../../../../utils/toCurrency";
+import type { Product } from "@/models/product";
+import { toCurrency } from "@/utils/toCurrency";
 
 import { Actions, Card } from "./style";
 
