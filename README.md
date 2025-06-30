@@ -1,5 +1,7 @@
 # Store Admin
 
+Deploy: https://triskinstore.vercel.app/
+
 ## Instruções de execução
 
 1. Instalar dependências
