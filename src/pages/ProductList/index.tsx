@@ -11,13 +11,14 @@ import type { Product } from "@/models/product";
 import { Empty } from "@/components/Empty";
 import { ProductItem } from "./components/ProductItem";
 import { Root } from "./style";
+import { ErrorMessage } from "@/components/ErrorMessage";
 
 export const ProductList = () => {
   const setProducts = useSetAtom(productsAtom);
   const search = useAtomValue(searchAtom);
   const searchQuery = search.length ? "name_like=" + search : "";
   const timestamp = useMemo(() => "&t=" + Date.now(), [searchQuery]);
-  const { isLoading } = useSWR<Product[]>(
+  const { isLoading, error } = useSWR<Product[]>(
     "/products?" + searchQuery + timestamp,
     fetcher,
     {
@@ -34,6 +35,10 @@ export const ProductList = () => {
         <LuSearchX fontSize={30} />
         Nenhum produto foi encontrado.
       </Empty>
+    );
+  } else if (error) {
+    return (
+      <ErrorMessage>Ocorreu um erro ao carregar os Produtos.</ErrorMessage>
     );
   }
 

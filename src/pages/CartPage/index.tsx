@@ -11,19 +11,24 @@ import { Loader } from "@/components/Loader";
 import { productsAtom } from "@/state/products";
 import type { Product } from "@/models/product";
 import { fetcher } from "@/services/fetcher";
+import { Empty } from "@/components/Empty";
+import { ErrorMessage } from "@/components/ErrorMessage";
 import { Resume } from "./components/Resume";
 import { Items, Root } from "./style";
 import { CartItem } from "./components/CartItem";
-import { Empty } from "@/components/Empty";
 
 export const CartPage = () => {
   const { cart } = useCartState();
   const cartIds = useRef<string[]>(cart.map((item) => item.id));
   const setProducts = useSetAtom(productsAtom);
   const idsQuery = queryString.stringify({ id: cartIds.current });
-  const { isLoading } = useSWR<Product[]>("/products?" + idsQuery, fetcher, {
-    onSuccess: setProducts,
-  });
+  const { isLoading, error } = useSWR<Product[]>(
+    "/products?" + idsQuery,
+    fetcher,
+    {
+      onSuccess: setProducts,
+    }
+  );
   const navigate = useNavigate();
 
   if (isLoading) {
@@ -37,6 +42,8 @@ export const CartPage = () => {
         </Button>
       </Empty>
     );
+  } else if (error) {
+    return <ErrorMessage>Ocorreu um erro ao carregar o Carrinho.</ErrorMessage>;
   }
 
   return (
