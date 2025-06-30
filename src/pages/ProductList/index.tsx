@@ -1,12 +1,14 @@
 import { useMemo } from "react";
 import useSWR from "swr";
 import { useAtomValue, useSetAtom } from "jotai";
+import { LuSearchX } from "react-icons/lu";
 
 import { Loader } from "@/components/Loader";
 import { productsAtom, useProductsState } from "@/state/products";
 import { searchAtom } from "@/state/search";
 import { fetcher } from "@/services/fetcher";
 import type { Product } from "@/models/product";
+import { Empty } from "@/components/Empty";
 import { ProductItem } from "./components/ProductItem";
 import { Root } from "./style";
 
@@ -26,6 +28,13 @@ export const ProductList = () => {
 
   if (isLoading) {
     return <Loader />;
+  } else if (!products.length) {
+    return (
+      <Empty>
+        <LuSearchX fontSize={30} />
+        Nenhum produto foi encontrado.
+      </Empty>
+    );
   }
 
   return (
