@@ -1,3 +1,4 @@
+import { useSnackbar } from "notistack";
 import { MinusIcon, PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 import { Heading, IconButton, Text } from "@radix-ui/themes";
 
@@ -14,11 +15,19 @@ export const CartItem = ({ product: { id, name, price } }: Props) => {
   const { cart, increaseItem, decreaseItem, removeItem } = useCartState();
   const item = cart.find((item) => item.id === id)!;
   const total = price * item.quantity;
+  const { enqueueSnackbar } = useSnackbar();
+
+  const remove = () => {
+    removeItem(id);
+    enqueueSnackbar("Produto removido do Carrinho.");
+  };
 
   return (
     <Root>
       <div>
-        <Heading>{name}</Heading>
+        <Heading size="4" mb="2">
+          {name}
+        </Heading>
         <Text>{toCurrency(price)}</Text>
       </div>
       <Quantity>
@@ -35,7 +44,7 @@ export const CartItem = ({ product: { id, name, price } }: Props) => {
           <IconButton variant="soft" onClick={() => increaseItem(id)}>
             <PlusIcon />
           </IconButton>
-          <IconButton color="red" onClick={() => removeItem(id)}>
+          <IconButton color="red" onClick={remove}>
             <TrashIcon />
           </IconButton>
         </Actions>
