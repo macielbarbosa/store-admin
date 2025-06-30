@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router";
 
 import { Layout } from "./components/Layout";
 import { ProductList } from "./pages/ProductList";
-import { Cart } from "./pages/Cart";
+import { CartPage } from "./pages/CartPage";
 
 export const router = createBrowserRouter([
   {
@@ -15,7 +15,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "cart",
-        Component: Cart,
+        Component: CartPage,
       },
     ],
   },

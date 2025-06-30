@@ -1,12 +1,9 @@
-import useSWR from "swr";
-
-import { fetchProducts } from "@/services/fetchers";
-
+import { useSWRProducts } from "@/hooks/useSWRProducts";
 import { ProductItem } from "./components/ProductItem";
 import { Root } from "./style";
 
 export const ProductList = () => {
-  const { data: products } = useSWR("products", fetchProducts);
+  const { data: products } = useSWRProducts();
 
   return (
     <Root>
