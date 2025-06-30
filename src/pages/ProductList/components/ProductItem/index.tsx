@@ -1,23 +1,24 @@
+import { useSetAtom } from "jotai";
 import { Badge, Button, Heading } from "@radix-ui/themes";
-import { PlusCircledIcon } from "@radix-ui/react-icons";
+import { Pencil2Icon, PlusCircledIcon } from "@radix-ui/react-icons";
 import { useSnackbar } from "notistack";
 
 import type { Product } from "@/models/product";
 import { toCurrency } from "@/utils/toCurrency";
 import { useCartState } from "@/state/cart";
+import { editProductIdAtom } from "@/state/editProductId";
 import { Actions, Card } from "./style";
-import { EditProductModal } from "../EditProductModal";
 
 interface Props {
   product: Product;
 }
 
 export const ProductItem = ({
-  product,
   product: { id, name, price, status },
 }: Props) => {
   const { increaseItem } = useCartState();
   const { enqueueSnackbar } = useSnackbar();
+  const setProductEditId = useSetAtom(editProductIdAtom);
   const isActive = status === "active";
 
   const addToCart = () => {
@@ -37,7 +38,9 @@ export const ProductItem = ({
           <PlusCircledIcon />
           Adicionar ao Carrinho
         </Button>
-        <EditProductModal product={product} />
+        <Button variant="soft" onClick={() => setProductEditId(id)}>
+          <Pencil2Icon /> Editar
+        </Button>
       </Actions>
     </Card>
   );

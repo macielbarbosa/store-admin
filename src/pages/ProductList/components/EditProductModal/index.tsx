@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useSWRMutation from "swr/mutation";
+import { useAtom } from "jotai";
 import {
   Badge,
   Button,
@@ -9,32 +10,39 @@ import {
   Text,
   TextField,
 } from "@radix-ui/themes";
-import { Pencil2Icon } from "@radix-ui/react-icons";
 import { useSnackbar } from "notistack";
 
 import type { Product, Status } from "@/models/product";
 import { mutation } from "@/services/mutation";
 import { useProductsState } from "@/state/products";
+import { editProductIdAtom } from "@/state/editProductId";
 import { Actions, Fields } from "./style";
 
-interface Props {
-  product: Product;
-}
-
-export const EditProductModal = ({ product }: Props) => {
-  const [name, setName] = useState<string>(product.name);
-  const [price, setPrice] = useState<string>(product.price.toString());
-  const [status, setStatus] = useState<Status>(product.status);
+export const EditProductModal = () => {
+  const [productId, setEditProductId] = useAtom(editProductIdAtom);
+  const { updateProduct, products } = useProductsState();
+  const [name, setName] = useState<string>();
+  const [price, setPrice] = useState<string>();
+  const [status, setStatus] = useState<Status>();
   const [isDialogOpen, setDialogOpen] = useState<boolean>(false);
   const { trigger, isMutating } = useSWRMutation<
     Product,
     Error,
     string,
     Partial<Product>
-  >("/products/" + product.id, mutation);
-  const { updateProduct } = useProductsState();
+  >("/products/" + productId, mutation);
   const { enqueueSnackbar } = useSnackbar();
   const isActive = status === "active";
+
+  useEffect(() => {
+    if (productId) {
+      const product = products.find((product) => product.id === productId)!;
+      setName(product.name);
+      setPrice(product.price.toString());
+      setStatus(product.status);
+    }
+    setDialogOpen(Boolean(productId));
+  }, [productId]);
 
   const onSave = async () => {
     if (name === "") {
@@ -45,8 +53,8 @@ export const EditProductModal = ({ product }: Props) => {
     }
     const updatedProduct = { name, price: Number(price), status };
     await trigger(updatedProduct);
-    updateProduct(product.id, updatedProduct);
-    setDialogOpen(false);
+    updateProduct(productId!, updatedProduct);
+    setEditProductId(null);
     enqueueSnackbar("O produto foi atualizado.");
   };
 
@@ -60,12 +68,10 @@ export const EditProductModal = ({ product }: Props) => {
   };
 
   return (
-    <Dialog.Root open={isDialogOpen} onOpenChange={setDialogOpen}>
-      <Dialog.Trigger>
-        <Button variant="soft">
-          <Pencil2Icon /> Editar
-        </Button>
-      </Dialog.Trigger>
+    <Dialog.Root
+      open={isDialogOpen}
+      onOpenChange={() => setEditProductId(null)}
+    >
       <Dialog.Content maxWidth="450px">
         <Dialog.Title mb="5">Editar Produto</Dialog.Title>
         <Fields>

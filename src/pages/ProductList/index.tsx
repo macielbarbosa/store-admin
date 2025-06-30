@@ -12,11 +12,15 @@ import { Empty } from "@/components/Empty";
 import { ProductItem } from "./components/ProductItem";
 import { Root } from "./style";
 import { ErrorMessage } from "@/components/ErrorMessage";
+import { EditProductModal } from "./components/EditProductModal";
 
 export const ProductList = () => {
   const setProducts = useSetAtom(productsAtom);
   const search = useAtomValue(searchAtom);
-  const searchQuery = search.length ? "name_like=" + search : "";
+  const searchQuery = useMemo(
+    () => (search.length ? "name_like=" + search : ""),
+    [search]
+  );
   const timestamp = useMemo(() => "&t=" + Date.now(), [searchQuery]);
   const { isLoading, error } = useSWR<Product[]>(
     "/products?" + searchQuery + timestamp,
@@ -47,6 +51,7 @@ export const ProductList = () => {
       {products.map((product) => (
         <ProductItem key={product.id} product={product} />
       ))}
+      <EditProductModal />
     </Root>
   );
 };
