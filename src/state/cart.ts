@@ -4,9 +4,9 @@ import { atomWithStorage } from "jotai/utils";
 import type { Cart } from "@/models/cart";
 import { getInitialCart } from "@/utils/getInitialCart";
 
-const cartAtom = atomWithStorage<Cart>("cart", getInitialCart());
+export const cartAtom = atomWithStorage<Cart>("cart", getInitialCart());
 
-export const useCartState = () => {
+export const useCartStore = () => {
   const [cart, setCart] = useAtom(cartAtom);
 
   const findItemIndex = (id: string) =>
@@ -46,6 +46,5 @@ export const useCartState = () => {
     decreaseItem,
     removeItem,
     isInCart,
-    totalItems: cart.reduce((total, item) => total + item.quantity, 0),
   };
 };

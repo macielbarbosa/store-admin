@@ -14,13 +14,13 @@ import { useSnackbar } from "notistack";
 
 import type { Product, Status } from "@/models/product";
 import { mutation } from "@/services/mutation";
-import { useProductsState } from "@/state/products";
+import { useProductsStore } from "@/state/products";
 import { editProductIdAtom } from "@/state/editProductId";
 import { Actions, Fields } from "./style";
 
 export const EditProductModal = () => {
   const [productId, setEditProductId] = useAtom(editProductIdAtom);
-  const { updateProduct, products } = useProductsState();
+  const { updateProduct, products } = useProductsStore();
   const [name, setName] = useState<string>();
   const [price, setPrice] = useState<string>();
   const [status, setStatus] = useState<Status>();

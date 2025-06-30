@@ -3,7 +3,7 @@
     {
       "id": "0",
       "name": "Notebook Samsung Galaxy 8GB 120GB SSD",
-      "price": 1221,
+      "price": 2221,
       "status": "active"
     },
     {
@@ -15,8 +15,32 @@
     {
       "id": "2",
       "name": "Headset Gamer HyperX",
-      "price": 2.5,
+      "price": 342.5,
       "status": "inactive"
+    },
+    {
+      "id": "3",
+      "name": "iMac M4 8GB 240GB",
+      "price": 10000,
+      "status": "active"
+    },
+    {
+      "id": "4",
+      "name": "iPhone 14 Pro Max",
+      "price": 5000,
+      "status": "active"
+    },
+    {
+      "id": "5",
+      "name": "Webcan Logitech HD 1080p",
+      "price": 232.5,
+      "status": "active"
+    },
+    {
+      "id": "6",
+      "name": "Processador AMD Ryzen 7 5700x3D",
+      "price": 1232.5,
+      "status": "active"
     }
   ]
 }

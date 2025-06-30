@@ -4,7 +4,7 @@ import { MinusIcon, PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 import { Heading, IconButton, Text } from "@radix-ui/themes";
 
 import { toCurrency } from "@/utils/toCurrency";
-import { useCartState } from "@/state/cart";
+import { useCartStore } from "@/state/cart";
 import { productsAtom } from "@/state/products";
 import type { CartItem as ICartItem } from "@/models/cart";
 import { Actions, Quantity, Root, Total } from "./style";
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const CartItem = ({ item: { id, quantity } }: Props) => {
-  const { increaseItem, decreaseItem, removeItem } = useCartState();
+  const { increaseItem, decreaseItem, removeItem } = useCartStore();
   const products = useAtomValue(productsAtom);
   const { price, name } = products.find((product) => product.id === id)!;
 

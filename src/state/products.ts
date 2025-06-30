@@ -4,7 +4,7 @@ import type { Product } from "@/models/product";
 
 export const productsAtom = atom<Product[]>([]);
 
-export const useProductsState = () => {
+export const useProductsStore = () => {
   const [products, setProducts] = useAtom(productsAtom);
 
   const updateProduct = (id: string, data: Partial<Product>) => {

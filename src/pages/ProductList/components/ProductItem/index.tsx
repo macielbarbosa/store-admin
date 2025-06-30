@@ -5,7 +5,7 @@ import { useSnackbar } from "notistack";
 
 import type { Product } from "@/models/product";
 import { toCurrency } from "@/utils/toCurrency";
-import { useCartState } from "@/state/cart";
+import { useCartStore } from "@/state/cart";
 import { editProductIdAtom } from "@/state/editProductId";
 import { Actions, Card } from "./style";
 
@@ -16,7 +16,7 @@ interface Props {
 export const ProductItem = ({
   product: { id, name, price, status },
 }: Props) => {
-  const { increaseItem } = useCartState();
+  const { increaseItem } = useCartStore();
   const { enqueueSnackbar } = useSnackbar();
   const setProductEditId = useSetAtom(editProductIdAtom);
   const isActive = status === "active";

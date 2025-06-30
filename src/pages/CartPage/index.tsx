@@ -1,12 +1,12 @@
 import { useRef } from "react";
-import { useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import useSWR from "swr";
 import queryString from "query-string";
 import { useNavigate } from "react-router";
 import { Button } from "@radix-ui/themes";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 
-import { useCartState } from "@/state/cart";
+import { cartAtom } from "@/state/cart";
 import { Loader } from "@/components/Loader";
 import { productsAtom } from "@/state/products";
 import type { Product } from "@/models/product";
@@ -18,7 +18,7 @@ import { Items, Root } from "./style";
 import { CartItem } from "./components/CartItem";
 
 export const CartPage = () => {
-  const { cart } = useCartState();
+  const cart = useAtomValue(cartAtom);
   const cartIds = useRef<string[]>(cart.map((item) => item.id));
   const setProducts = useSetAtom(productsAtom);
   const idsQuery = queryString.stringify({ id: cartIds.current });

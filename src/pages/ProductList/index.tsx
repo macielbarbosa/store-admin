@@ -4,14 +4,14 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { LuSearchX } from "react-icons/lu";
 
 import { Loader } from "@/components/Loader";
-import { productsAtom, useProductsState } from "@/state/products";
+import { productsAtom } from "@/state/products";
 import { searchAtom } from "@/state/search";
 import { fetcher } from "@/services/fetcher";
 import type { Product } from "@/models/product";
 import { Empty } from "@/components/Empty";
+import { ErrorMessage } from "@/components/ErrorMessage";
 import { ProductItem } from "./components/ProductItem";
 import { Root } from "./style";
-import { ErrorMessage } from "@/components/ErrorMessage";
 import { EditProductModal } from "./components/EditProductModal";
 
 export const ProductList = () => {
@@ -29,7 +29,7 @@ export const ProductList = () => {
       onSuccess: setProducts,
     }
   );
-  const { products } = useProductsState();
+  const products = useAtomValue(productsAtom);
 
   if (isLoading) {
     return <Loader />;
