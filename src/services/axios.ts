@@ -8,7 +8,7 @@ export const api = axios.create({
 
 api.interceptors.request.use(
   async (config) => {
-    await delay(300);
+    await delay(500);
     return config;
   },
   (error) => Promise.reject(error)

@@ -7,4 +7,5 @@ export const AppBar = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 3rem;
+  gap: 1rem;
 `;
