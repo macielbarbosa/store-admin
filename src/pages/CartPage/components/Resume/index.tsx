@@ -1,10 +1,11 @@
 import { useMemo } from "react";
 import { useAtomValue } from "jotai";
-import { Flex, Heading, Text } from "@radix-ui/themes";
+import { Heading, Text } from "@radix-ui/themes";
 
 import { cartAtom } from "@/state/cart";
 import { productsAtom } from "@/state/products";
 import { toCurrency } from "@/utils/toCurrency";
+import { Paper } from "./style";
 
 export const Resume = () => {
   const cart = useAtomValue(cartAtom);
@@ -27,12 +28,12 @@ export const Resume = () => {
   );
 
   return (
-    <Flex direction="column">
+    <Paper>
       <Heading size="4" mb="3">
         Resumo
       </Heading>
       <Text>Valor dos produtos:</Text>
       <Text weight="medium">{toCurrency(total)}</Text>
-    </Flex>
+    </Paper>
   );
 };

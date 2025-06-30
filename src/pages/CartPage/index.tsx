@@ -14,7 +14,7 @@ import { fetcher } from "@/services/fetcher";
 import { Empty } from "@/components/Empty";
 import { ErrorMessage } from "@/components/ErrorMessage";
 import { Resume } from "./components/Resume";
-import { Items, Root } from "./style";
+import { Paper, Root } from "./style";
 import { CartItem } from "./components/CartItem";
 
 export const CartPage = () => {
@@ -48,11 +48,11 @@ export const CartPage = () => {
 
   return (
     <Root>
-      <Items>
+      <Paper>
         {cart?.map((item) => (
           <CartItem key={item.id} item={item} />
         ))}
-      </Items>
+      </Paper>
       <Resume />
     </Root>
   );
