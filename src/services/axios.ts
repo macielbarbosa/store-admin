@@ -1,15 +1,5 @@
 import axios from "axios";
 
-import { delay } from "@/utils/delay";
-
 export const api = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://68628a2896f0cc4e34ba2092.mockapi.io/store/",
 });
-
-api.interceptors.request.use(
-  async (config) => {
-    await delay(500);
-    return config;
-  },
-  (error) => Promise.reject(error)
-);

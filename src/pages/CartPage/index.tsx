@@ -1,12 +1,10 @@
-import { useRef } from "react";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useSetAtom } from "jotai";
 import useSWR from "swr";
-import queryString from "query-string";
 import { useNavigate } from "react-router";
 import { Button } from "@radix-ui/themes";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 
-import { cartAtom } from "@/state/cart";
+import { useCartStore } from "@/state/cart";
 import { Loader } from "@/components/Loader";
 import { productsAtom } from "@/state/products";
 import type { Product } from "@/models/product";
@@ -18,17 +16,13 @@ import { Paper, Root } from "./style";
 import { CartItem } from "./components/CartItem";
 
 export const CartPage = () => {
-  const cart = useAtomValue(cartAtom);
-  const cartIds = useRef<string[]>(cart.map((item) => item.id));
+  const { cart, isInCart } = useCartStore();
   const setProducts = useSetAtom(productsAtom);
-  const idsQuery = queryString.stringify({ id: cartIds.current });
-  const { isLoading, error } = useSWR<Product[]>(
-    "/products?" + idsQuery,
-    fetcher,
-    {
-      onSuccess: setProducts,
-    }
-  );
+  const { isLoading, error } = useSWR<Product[]>("/products", fetcher, {
+    onSuccess: (data) => {
+      setProducts(data.filter((product) => isInCart(product.id)));
+    },
+  });
   const navigate = useNavigate();
 
   if (isLoading) {

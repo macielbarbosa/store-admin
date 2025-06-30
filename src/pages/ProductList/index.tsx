@@ -10,6 +10,7 @@ import { fetcher } from "@/services/fetcher";
 import type { Product } from "@/models/product";
 import { Empty } from "@/components/Empty";
 import { ErrorMessage } from "@/components/ErrorMessage";
+import { isNotFoundError } from "@/utils/isNotFoundError";
 import { ProductItem } from "./components/ProductItem";
 import { Root } from "./style";
 import { EditProductModal } from "./components/EditProductModal";
@@ -18,12 +19,11 @@ export const ProductList = () => {
   const setProducts = useSetAtom(productsAtom);
   const search = useAtomValue(searchAtom);
   const searchQuery = useMemo(
-    () => (search.length ? "name_like=" + search : ""),
+    () => (search.length ? "name=" + search : ""),
     [search]
   );
-  const timestamp = useMemo(() => "&t=" + Date.now(), [searchQuery]);
   const { isLoading, error } = useSWR<Product[]>(
-    "/products?" + searchQuery + timestamp,
+    "/products?" + searchQuery,
     fetcher,
     {
       onSuccess: setProducts,
@@ -33,17 +33,19 @@ export const ProductList = () => {
 
   if (isLoading) {
     return <Loader />;
-  } else if (!products.length) {
-    return (
-      <Empty>
-        <LuSearchX fontSize={30} />
-        Nenhum produto foi encontrado.
-      </Empty>
-    );
   } else if (error) {
-    return (
-      <ErrorMessage>Ocorreu um erro ao carregar os Produtos.</ErrorMessage>
-    );
+    if (isNotFoundError(error)) {
+      return (
+        <Empty>
+          <LuSearchX fontSize={30} />
+          Nenhum produto foi encontrado.
+        </Empty>
+      );
+    } else {
+      return (
+        <ErrorMessage>Ocorreu um erro ao carregar os Produtos.</ErrorMessage>
+      );
+    }
   }
 
   return (
