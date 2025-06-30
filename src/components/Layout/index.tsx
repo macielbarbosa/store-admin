@@ -1,4 +1,4 @@
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import { Heading } from "@radix-ui/themes";
 
 import { useIsCartPage } from "@/hooks/useIsCartPage";
@@ -8,11 +8,22 @@ import { AppBar, Root } from "./style";
 
 export const Layout = () => {
   const isCartPage = useIsCartPage();
+  const navigate = useNavigate();
+
+  const goToHome = () => {
+    if (isCartPage) {
+      navigate("/");
+    } else {
+      window.location.reload();
+    }
+  };
 
   return (
     <Root>
       <AppBar>
-        <Heading color="blue">Triskin Store Admin</Heading>
+        <Heading color="blue" onClick={goToHome}>
+          Triskin Store Admin
+        </Heading>
         {!isCartPage && <SearchInput />}
         <CartIcon />
       </AppBar>

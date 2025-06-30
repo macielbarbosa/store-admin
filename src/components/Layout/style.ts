@@ -8,4 +8,8 @@ export const AppBar = styled.div`
   align-items: center;
   margin-bottom: 3rem;
   gap: 1rem;
+  > :first-child {
+    cursor: pointer;
+    user-select: none;
+  }
 `;

@@ -4,14 +4,14 @@ import { CartItem } from "./components/CartItem";
 import { Items, Root } from "./style";
 
 export const CartPage = () => {
-  const { isInCart } = useCartState();
-  const { data: products } = useSWRProducts();
-  const cartProducts = products?.filter((product) => isInCart(product.id));
+  const { cart } = useCartState();
+  const cartIds = cart.map((item) => item.id);
+  const { data: products } = useSWRProducts(cartIds);
 
   return (
     <Root>
       <Items>
-        {cartProducts?.map((product) => (
+        {products?.map((product) => (
           <CartItem product={product} />
         ))}
       </Items>
