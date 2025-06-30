@@ -1,13 +1,13 @@
 import { useSnackbar } from "notistack";
+import { useAtomValue } from "jotai";
 import { MinusIcon, PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 import { Heading, IconButton, Text } from "@radix-ui/themes";
 
 import { toCurrency } from "@/utils/toCurrency";
 import { useCartState } from "@/state/cart";
-import { Actions, Quantity, Root, Total } from "./style";
 import { productsAtom } from "@/state/products";
 import type { CartItem as ICartItem } from "@/models/cart";
-import { useAtomValue } from "jotai";
+import { Actions, Quantity, Root, Total } from "./style";
 
 interface Props {
   item: ICartItem;
