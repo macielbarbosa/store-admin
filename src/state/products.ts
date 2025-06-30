@@ -2,10 +2,10 @@ import { atom, useAtom } from "jotai";
 
 import type { Product } from "@/models/product";
 
-const productAtom = atom<Product[]>([]);
+export const productsAtom = atom<Product[]>([]);
 
 export const useProductsState = () => {
-  const [products, setProducts] = useAtom(productAtom);
+  const [products, setProducts] = useAtom(productsAtom);
 
   const updateProduct = (id: string, data: Partial<Product>) => {
     const index = products.findIndex((product) => product.id === id);

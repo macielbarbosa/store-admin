@@ -2,6 +2,7 @@ import { useCartState } from "@/state/cart";
 import { useSWRProducts } from "@/hooks/useSWRProducts";
 import { CartItem } from "./components/CartItem";
 import { Items, Root } from "./style";
+import { Resume } from "./components/Resume";
 
 export const CartPage = () => {
   const { cart } = useCartState();
@@ -12,9 +13,10 @@ export const CartPage = () => {
     <Root>
       <Items>
         {products?.map((product) => (
-          <CartItem product={product} />
+          <CartItem key={product.id} product={product} />
         ))}
       </Items>
+      <Resume />
     </Root>
   );
 };
