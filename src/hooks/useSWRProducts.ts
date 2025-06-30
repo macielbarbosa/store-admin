@@ -1,5 +1,10 @@
 import useSWR from "swr";
 
-import { fetchProducts } from "@/services/fetchers";
+import type { Product } from "@/models/product";
+import { fetcher } from "@/services/fetcher";
+import { useProductsState } from "@/state/products";
 
-export const useSWRProducts = () => useSWR("products", fetchProducts);
+export const useSWRProducts = () => {
+  const { setProducts } = useProductsState();
+  return useSWR<Product[]>("/products", fetcher, { onSuccess: setProducts });
+};

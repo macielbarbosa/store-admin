@@ -1,6 +1,8 @@
+export type Status = "active" | "inactive";
+
 export interface Product {
-  id: number;
+  id: string;
   name: string;
   price: number;
-  status: "active" | "inactive";
+  status: Status;
 }

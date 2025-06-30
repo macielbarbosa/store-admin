@@ -9,12 +9,12 @@ const cartAtom = atomWithStorage<Cart>("cart", getInitialCart());
 export const useCartState = () => {
   const [cart, setCart] = useAtom(cartAtom);
 
-  const findItemIndex = (id: number) =>
+  const findItemIndex = (id: string) =>
     cart.findIndex((item) => item.id === id);
 
-  const isInCart = (id: number) => findItemIndex(id) !== -1;
+  const isInCart = (id: string) => findItemIndex(id) !== -1;
 
-  const increaseItem = (id: number) => {
+  const increaseItem = (id: string) => {
     const index = findItemIndex(id);
     const newCart = [...cart];
     const isInCart = index !== -1;
@@ -26,14 +26,14 @@ export const useCartState = () => {
     setCart(newCart);
   };
 
-  const decreaseItem = (id: number) => {
+  const decreaseItem = (id: string) => {
     const index = findItemIndex(id);
     const newCart = [...cart];
     newCart[index].quantity -= 1;
     setCart(newCart);
   };
 
-  const removeItem = (id: number) => {
+  const removeItem = (id: string) => {
     const index = findItemIndex(id);
     const newCart = [...cart];
     newCart.splice(index, 1);

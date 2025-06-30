@@ -1,17 +1,18 @@
 import { Badge, Button, Heading } from "@radix-ui/themes";
-import { Pencil2Icon, PlusCircledIcon } from "@radix-ui/react-icons";
+import { PlusCircledIcon } from "@radix-ui/react-icons";
 
 import type { Product } from "@/models/product";
 import { toCurrency } from "@/utils/toCurrency";
-
-import { Actions, Card } from "./style";
 import { useCartState } from "@/state/cart";
+import { Actions, Card } from "./style";
+import { EditProductModal } from "../EditProductModal";
 
 interface Props {
   product: Product;
 }
 
 export const ProductItem = ({
+  product,
   product: { id, name, price, status },
 }: Props) => {
   const { increaseItem } = useCartState();
@@ -32,9 +33,7 @@ export const ProductItem = ({
           <PlusCircledIcon />
           Adicionar ao Carrinho
         </Button>
-        <Button variant="soft">
-          <Pencil2Icon /> Editar
-        </Button>
+        <EditProductModal product={product} />
       </Actions>
     </Card>
   );

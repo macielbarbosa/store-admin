@@ -3,6 +3,7 @@
 }
 
 .rt-Button:not(:disabled):hover,
+.rt-SwitchRoot:not(:disabled):hover,
 .rt-IconButton:not(:disabled):hover {
   cursor: pointer;
 }

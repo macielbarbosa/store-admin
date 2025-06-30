@@ -1,5 +1,5 @@
 interface CartItem {
-  id: number;
+  id: string;
   quantity: number;
 }
 
