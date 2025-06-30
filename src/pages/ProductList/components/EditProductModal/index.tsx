@@ -10,6 +10,7 @@ import {
   TextField,
 } from "@radix-ui/themes";
 import { Pencil2Icon } from "@radix-ui/react-icons";
+import { useSnackbar } from "notistack";
 
 import type { Product, Status } from "@/models/product";
 import { mutation } from "@/services/mutation";
@@ -32,6 +33,7 @@ export const EditProductModal = ({ product }: Props) => {
     Partial<Product>
   >("/products/" + product.id, mutation);
   const { updateProduct } = useProductsState();
+  const { enqueueSnackbar } = useSnackbar();
   const isActive = status === "active";
 
   const onSave = async () => {
@@ -39,6 +41,7 @@ export const EditProductModal = ({ product }: Props) => {
     await trigger(updatedProduct);
     updateProduct(product.id, updatedProduct);
     setDialogOpen(false);
+    enqueueSnackbar("O produto foi atualizado.");
   };
 
   return (

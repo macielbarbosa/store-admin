@@ -1,12 +1,15 @@
 import { RouterProvider } from "react-router";
 import { Theme } from "@radix-ui/themes";
+import { SnackbarProvider } from "notistack";
 
 import { router } from "./router";
 
 function App() {
   return (
     <Theme>
-      <RouterProvider router={router} />
+      <SnackbarProvider variant="success">
+        <RouterProvider router={router} />
+      </SnackbarProvider>
     </Theme>
   );
 }
