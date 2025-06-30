@@ -37,11 +37,26 @@ export const EditProductModal = ({ product }: Props) => {
   const isActive = status === "active";
 
   const onSave = async () => {
+    if (name === "") {
+      enqueueSnackbar("Preencha o nome do Produto", {
+        variant: "info",
+      });
+      return;
+    }
     const updatedProduct = { name, price: Number(price), status };
     await trigger(updatedProduct);
     updateProduct(product.id, updatedProduct);
     setDialogOpen(false);
     enqueueSnackbar("O produto foi atualizado.");
+  };
+
+  const handlePriceChange: React.ChangeEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    const inputValue = event.target.value;
+    if (inputValue === "" || /^\d*\.?\d{0,2}$/.test(inputValue)) {
+      setPrice(inputValue);
+    }
   };
 
   return (
@@ -71,7 +86,10 @@ export const EditProductModal = ({ product }: Props) => {
             <TextField.Root
               type="number"
               value={price}
-              onChange={(event) => setPrice(event.target.value)}
+              onChange={handlePriceChange}
+              onBlur={() => {
+                if (price === "") setPrice("0");
+              }}
               placeholder="Digite o preço do Produto"
             />
           </label>
