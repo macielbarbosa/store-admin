@@ -1,11 +1,32 @@
-import { useSWRProducts } from "@/hooks/useSWRProducts";
-import { useProductsState } from "@/state/products";
+import { useMemo } from "react";
+import useSWR from "swr";
+import { useAtomValue, useSetAtom } from "jotai";
+
+import { Loader } from "@/components/Loader";
+import { productsAtom, useProductsState } from "@/state/products";
+import { searchAtom } from "@/state/search";
+import { fetcher } from "@/services/fetcher";
+import type { Product } from "@/models/product";
 import { ProductItem } from "./components/ProductItem";
 import { Root } from "./style";
 
 export const ProductList = () => {
-  useSWRProducts();
+  const setProducts = useSetAtom(productsAtom);
+  const search = useAtomValue(searchAtom);
+  const searchQuery = search.length ? "name_like=" + search : "";
+  const timestamp = useMemo(() => "&t=" + Date.now(), [searchQuery]);
+  const { isLoading } = useSWR<Product[]>(
+    "/products?" + searchQuery + timestamp,
+    fetcher,
+    {
+      onSuccess: setProducts,
+    }
+  );
   const { products } = useProductsState();
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <Root>

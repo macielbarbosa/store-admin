@@ -2,19 +2,23 @@ import { useSnackbar } from "notistack";
 import { MinusIcon, PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 import { Heading, IconButton, Text } from "@radix-ui/themes";
 
-import type { Product } from "@/models/product";
 import { toCurrency } from "@/utils/toCurrency";
 import { useCartState } from "@/state/cart";
 import { Actions, Quantity, Root, Total } from "./style";
+import { productsAtom } from "@/state/products";
+import type { CartItem as ICartItem } from "@/models/cart";
+import { useAtomValue } from "jotai";
 
 interface Props {
-  product: Product;
+  item: ICartItem;
 }
 
-export const CartItem = ({ product: { id, name, price } }: Props) => {
-  const { cart, increaseItem, decreaseItem, removeItem } = useCartState();
-  const item = cart.find((item) => item.id === id)!;
-  const total = price * item.quantity;
+export const CartItem = ({ item: { id, quantity } }: Props) => {
+  const { increaseItem, decreaseItem, removeItem } = useCartState();
+  const products = useAtomValue(productsAtom);
+  const { price, name } = products.find((product) => product.id === id)!;
+
+  const total = price * quantity;
   const { enqueueSnackbar } = useSnackbar();
 
   const remove = () => {
@@ -32,11 +36,11 @@ export const CartItem = ({ product: { id, name, price } }: Props) => {
       </div>
       <Quantity>
         <Text>Quant.</Text>
-        <Text weight="medium">{item.quantity}</Text>
+        <Text weight="medium">{quantity}</Text>
         <Actions>
           <IconButton
             variant="soft"
-            disabled={item.quantity === 1}
+            disabled={quantity === 1}
             onClick={() => decreaseItem(id)}
           >
             <MinusIcon />
